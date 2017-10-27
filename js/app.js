@@ -1,7 +1,36 @@
 var app = angular.module('myApp', []);
 
 
-app.controller('myController', ['$scope', '$http', function($scope, $http){
+app.service('chartService', function(){
+   this.initChart = function(name, value, color, border) {
+      	var ctx = document.getElementById("myChart").getContext('2d');
+		var myChart = new Chart(ctx, {
+		    type: 'bar',
+		    data: {
+		        labels: name,
+		        datasets: [{
+		            label: 'Price in USD',
+		            data: value,
+		            backgroundColor: color,
+		            borderColor: border,
+		            borderWidth: 1
+		        }]
+		    },
+		    options: {
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero:true
+		                }
+		            }]
+		        }
+		    }
+		});
+   }
+});
+
+
+app.controller('myController', ['$scope', '$http', 'chartService', function($scope, $http, chartService){
 
 	$scope.showErrorScreen = false;
 	$scope.names = [];
@@ -36,65 +65,13 @@ app.controller('myController', ['$scope', '$http', function($scope, $http){
 	     			}
 	     		}
 
-	     		$scope.initChart($scope.names, $scope.value, $scope.color, $scope.border);
+	     		chartService.initChart($scope.names, $scope.value, $scope.color, $scope.border);
 	     	}
 
 	    });
 	}
 
 
-	$scope.initChart = function(name, value, color, border){
-
-		var ctx = document.getElementById("myChart").getContext('2d');
-		var myChart = new Chart(ctx, {
-		    type: 'bar',
-		    data: {
-		        labels: name,
-		        datasets: [{
-		            label: 'Price in USD',
-		            data: value,
-		            backgroundColor: color,
-		            borderColor: border,
-		            borderWidth: 1
-		        }]
-		    },
-		    options: {
-		        responsive: true,
-		maintainAspectRatio: true,
-		legend: {
-                        position: 'top',
-                    },
-	  barPercentage: 1.0,
-	  categoryPercentage: 0.5,
-	  barThickness: 200,
-	  maxBarThickness: 400,
-	  tooltips: {
-	  
-	  enabled:true,
-	  mode: 'nearest',
-	  intersect: true,
-	  backgroundColor: 'rgba(0,0,0,0.8)'
-	  },
-      title: {
-        display: true,
-        text: 'Exchange rate of all crypto currencies in USD'
-      },
-	   scales: {
-			xAxes: [{
-            gridLines: {
-                offsetGridLines: true
-            }
-        }],
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-		    }
-		});
-
-	}
 
 	for (var i=0;i<=1000;i++) {
       (function(ind) {
