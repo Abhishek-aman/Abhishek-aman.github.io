@@ -1,0 +1,33 @@
+html, body{
+	height: 100%;
+	width: 100%;
+}
+
+.chart-div {
+	height: 100%
+}
+
+
+
+body {  
+  background: white;
+  padding: 16px;
+}
+canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 80vh;
+  width: 80vw;
+}
+@media only screen and (max-width:620px) {
+  /* For mobile phones: */
+  .menu, .main, .right {
+    width:100%;
+  }
+}
